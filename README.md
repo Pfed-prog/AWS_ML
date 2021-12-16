@@ -8,6 +8,11 @@ Next we use model the time-series data to predict token price for the N number o
 
 We have Used Arima(1,1,0) model since it has maths foundation and differences the data to make stationary.
 
+## Contract Info
+
+email: fedorovn19@gmail.com
+
+
 ## References
 
 [DSPYT: Time series data – An easy introduction](https://dspyt.com/time-series-data-an-easy-introduction/)
