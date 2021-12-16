@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import json
 import pandas as pd
@@ -7,6 +8,7 @@ from statsmodels.tsa.arima.model import ARIMA
 
 application = Flask(__name__)
 app = application
+CORS(app)
 
 url ='https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
 
@@ -38,7 +40,6 @@ def home():
     # Forecast
     fc = fitted.forecast(f)
 
-    #fc_series = pd.Series(fc)
     return jsonify({'predictions': list(fc), 'last_date': str(last), 'timestep': str(timestep)})
 
 if __name__ == "__main__":
