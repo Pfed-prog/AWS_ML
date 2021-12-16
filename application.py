@@ -18,6 +18,8 @@ def home():
     else:
         f=15
     if request.args.get('q'):
+        q = request.args.get('q')
+    else:
         q = """
         {token (id:"0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"){tokenDayData{priceUSD date}}}
         """
