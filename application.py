@@ -39,7 +39,7 @@ def home():
     fc = fitted.forecast(f)
 
     #fc_series = pd.Series(fc)
-    return jsonify({'predictions': list(fc), 'last date': str(last), 'timestep': str(timestep)})
+    return jsonify({'predictions': list(fc), 'last_date': str(last), 'timestep': str(timestep)})
 
 if __name__ == "__main__":
     app.run(debug=True)
