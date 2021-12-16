@@ -11,20 +11,17 @@ app = application
 
 url ='https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
 
-query = """
-{
-  token (id:"0x1f9840a85d5af5bf1d1762f925bdaddc4201f984") {
-    tokenDayData{
-      priceUSD
-      date
-    }
-  }
-}
-"""
-
 @app.route("/", methods=["GET","POST"])
 def home():
-    r = requests.post(url, json={'query': query})
+    if request.args.get('f'):
+        f = int(request.args.get('f'))
+    else:
+        f=15
+    if request.args.get('q'):
+        q = """
+        {token (id:"0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"){tokenDayData{priceUSD date}}}
+        """
+    r = requests.post(url, json={'query': q})
     json_data = json.loads(r.text)
     df_data = json_data['data']['token']['tokenDayData']
     df = pd.DataFrame(df_data)
@@ -34,7 +31,7 @@ def home():
     model = ARIMA(df.priceUSD, order=(1,1,0))
     fitted = model.fit()
     # Forecast
-    fc = fitted.forecast(15)
+    fc = fitted.forecast(f)
 
     fc_series = pd.Series(fc)
     return jsonify({'predictions': list(fc_series)})
